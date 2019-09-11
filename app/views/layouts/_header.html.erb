@@ -1,0 +1,270 @@
+<header class="header-area">
+  <div class="header-top black-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-12 col-sm-4">
+          <div class="welcome-area">
+            <!-- <p>Default welcome msg! </p> -->
+          </div>
+        </div>
+        <div class="col-lg-8 col-md-8 col-12 col-sm-8">
+          <div class="account-curr-lang-wrap f-right">
+            <ul>
+              <li class="top-hover"><a href="#">Setting  <i class="ion-chevron-down"></i></a>
+                <ul>
+                  <li><%= link_to "Admin", admin_root_path %></li>
+                  <% unless logged_in? %>
+                    <li><%= link_to "Login", login_path %></li>
+                    <li><%= link_to "Register", login_path %></li>
+                  <% end %>
+                  <% if logged_in? %>
+                    <li><%= link_to "my account", @current_user %></li>
+                  <% end %>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header-middle">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-12 col-sm-4">
+          <div class="logo">
+            <%= link_to root_url do %>
+              <%= image_tag "logo/logo.png" %>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-5 col-12 col-sm-4">
+          <div class="search-box">
+            <%= form_tag(products_path, method: :get) do %>
+              <div class="input-group-search">
+                <%= text_field_tag "search_name", params[:search_name], placeholder:"Tên sản phẩm...", class: "search-index" %>
+                <div class="input-group-append">
+                  <%= select_tag :category_id, options_for_select(@categories_for_search), include_blank: "Danh mục" %>
+                </div>
+                <div class="input-group-append">
+                  <%= button_tag "Tìm kiếm", class: "btn search-button-index" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-4 col-12 col-sm-4">
+          <div class="header-middle-right f-right">
+            <div class="header-login">
+              <% if logged_in? %>
+                <%= link_to logout_path do %>
+                  <div class="header-icon-style">
+                    <i class="icon-user icons"></i>
+                  </div>
+                  <div class="login-text-content">
+                    <p>Sign out <br></p>
+                  </div>
+                <% end %>
+              <% else %>
+                <%= link_to login_path do %>
+                  <div class="header-icon-style">
+                    <i class="icon-user icons"></i>
+                  </div>
+                  <div class="login-text-content">
+                    <p>Register <br> or <span>Sign in</span></p>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="header-wishlist">
+            </div>
+            <div class="header-cart">
+              <%= link_to "", class: "cart-btn" do %>
+                <div class="header-icon-style">
+                  <i class="icon-handbag icons"></i>
+                  <span class="count-style"><%= current_order.total_quantity %></span>
+                </div>
+                <div class="cart-text">
+                  <span class="digit">My Cart</span>
+                  <span class="cart-digit-bold">$<%= current_order.subtotal %></span>
+                </div>
+              <% end %>
+              <div class="shopping-cart-content">
+                <ul>
+                  <li class="single-shopping-cart">
+                    <% current_order.product_orders.each do |product_order| %>
+                      <div class="shopping-cart-img">
+                        <%= link_to product_path(product_order.product_id) do %>
+                          <%= image_tag "cart/cart-1.jpg" %>
+                        <% end %>
+                      </div>
+                      <div class="shopping-cart-title">
+                        <h4><%= link_to product_order.product.name, product_path(product_order.product_id) %></h4>
+                        <h6>Qty:<%= product_order.quantity %> </h6>
+                        <span>$<%= product_order.product.price %></span>
+                      </div>
+                      <div class="shopping-cart-delete">
+                        <%= link_to "product_orders/#{product_order.id}", method: :delete do %>
+                          <i class="ion ion-close"></i>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </li>
+                </ul>
+                <div class="shopping-cart-total">
+                  <!-- <h4>Shipping : <span>$20.00</span></h4> -->
+                  <h4>Total : <span class="shop-total">$<%= current_order.subtotal %></span></h4>
+                </div>
+                <div class="shopping-cart-btn">
+                  <%= link_to "view cart", carts_path %>
+                  <%= link_to "checkout", new_login_checkout_path %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header-bottom transparent-bar black-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-12">
+          <div class="main-menu">
+            <nav>
+              <ul>
+                <li class="top-hover">
+                  <%= link_to "home", root_url %>
+                </li>
+                <li class="top-hover"><a href="">Category <i class="ion-chevron-down"></i></a>
+                  <ul class="submenu">
+                    <% Category.all.each do |category| %>
+                      <li>
+                        <%= link_to products_path( :category_id => category.id), method: :get do %>
+                          <%= category.name %>
+                        <% end %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="top-hover"><a href="">Price <i class="ion-chevron-down"></i></a>
+                  <ul class="submenu">
+                    <li>
+                      <%= link_to searchs_path(:code => 1) do %>
+                        <%= "< $100" %>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to searchs_path(:code => 2) do %>
+                        <%= "$100 - $200" %>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to searchs_path(:code => 3) do %>
+                        <%= "$200 - $400" %>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to searchs_path(:code => 4) do %>
+                        <%= ">$400" %>
+                      <% end %>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- mobile-menu-area-start -->
+  <div class="mobile-menu-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="mobile-menu">
+            <nav id="mobile-menu-active">
+              <ul class="menu-overflow" id="nav">
+                <li>
+                  <a href="index.html">Home</a>
+                </li>
+                <li><a href="#">pages</a>
+                  <ul>
+                    <li><a href="about-us.html">about us </a></li>
+                    <li><a href="shop.html">shop Grid</a></li>
+                    <li><a href="shop-list.html">shop list</a></li>
+                    <li><a href="product-details.html">product details</a></li>
+                    <li><a href="cart-page.html">cart page</a></li>
+                    <li><a href="checkout.html">checkout</a></li>
+                    <li><a href="wishlist.html">wishlist</a></li>
+                    <li><a href="my-account">my account</a></li>
+                    <li><a href="login">login / register</a></li>
+                    <li><a href="contact.html">contact</a></li>
+                    <li><a href="testimonial.html">Testimonials</a></li>
+                  </ul>
+                </li>
+                <li><a href="shop.html"> Shop </a>
+                  <ul>
+                    <li><a href="#">Categories 01</a>
+                      <ul>
+                        <li><a href="shop.html">salad</a></li>
+                        <li><a href="shop.html">sandwich</a></li>
+                        <li><a href="shop.html">bread</a></li>
+                        <li><a href="shop.html">steak</a></li>
+                        <li><a href="shop.html">tuna steak</a></li>
+                        <li><a href="shop.html">spaghetti </a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#">Categories 02</a>
+                      <ul>
+                        <li><a href="shop.html">rice</a></li>
+                        <li><a href="shop.html">pizza</a></li>
+                        <li><a href="shop.html">hamburger</a></li>
+                        <li><a href="shop.html">eggs</a></li>
+                        <li><a href="shop.html">sausages</a></li>
+                        <li><a href="shop.html">apple juice</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#">Categories 03</a>
+                      <ul>
+                        <li><a href="shop.html">milk</a></li>
+                        <li><a href="shop.html">grape juice</a></li>
+                        <li><a href="shop.html">cookie</a></li>
+                        <li><a href="shop.html">candy</a></li>
+                        <li><a href="shop.html">cake</a></li>
+                        <li><a href="shop.html">cupcake</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#">Categories 04</a>
+                      <ul>
+                        <li><a href="shop.html">pie</a></li>
+                        <li><a href="shop.html">stoberry</a></li>
+                        <li><a href="shop.html">sandwich</a></li>
+                        <li><a href="shop.html">bread</a></li>
+                        <li><a href="shop.html">steak</a></li>
+                        <li><a href="shop.html">hamburger</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li><a href="blog-rightsidebar.html">blog</a>
+                  <ul>
+                    <li><a href="blog.html">Blog No sidebar</a></li>
+                    <li><a href="blog-rightsidebar.html">Blog sidebar</a></li>
+                    <li><a href="blog-details.html">Blog details</a></li>
+                    <li><a href="blog-details-gallery.html">Blog details gallery</a></li>
+                    <li><a href="blog-details-video.html">Blog details video</a></li>
+                  </ul>
+                </li>
+                <li><a href="contact.html">contact us</a></li>
+                <li><a href="shop.html">burger</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- mobile-menu-area-end -->
+</header>

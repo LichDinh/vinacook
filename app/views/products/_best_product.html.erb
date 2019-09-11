@@ -1,0 +1,14 @@
+<div class="product-img testing">
+  <%= link_to best_product do %>
+    <%= image_tag best_product.image_url || "product/product3.jpg" %>
+  <% end %>
+</div>
+<div class="product-content">
+  <h4>
+    <%= link_to best_product.name, best_product %>
+  </h4>
+  <div class="product-price-wrapper">
+    <span><%= "$#{best_product.sale_price}" || "$100" %></span>
+    <span class="product-price-old"><%= "$#{best_product.price}" %> </span>
+  </div>
+</div>

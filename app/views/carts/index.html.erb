@@ -1,0 +1,78 @@
+<div class="breadcrumb-area gray-bg">
+  <div class="container">
+    <div class="breadcrumb-content">
+      <ul>
+        <li><%= link_to "Home", root_url %></li>
+        <li class="active">Cart </li>
+      </ul>
+    </div>
+  </div>
+</div>
+ <!-- shopping-cart-area start -->
+<div class="cart-main-area pt-95 pb-100">
+ <div class="container">
+   <h3 class="page-title">Your cart items</h3>
+   <div class="row">
+     <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+       <div class="table-content table-responsive">
+         <table>
+           <thead>
+             <tr>
+               <th>Image</th>
+               <th>Product Name</th>
+               <th>Until Price</th>
+               <th>Qty</th>
+               <th>Subtotal</th>
+               <th>action</th>
+             </tr>
+           </thead>
+           <tbody>
+             <% current_order.product_orders.each do |product_order| %>
+               <tr>
+                 <td class="product-thumbnail">
+                   <%= link_to product_order.product do %>
+                    <%= image_tag product_order.product.image_url || "cart/cart-1.jpg" %>
+                   <% end %>
+                 </td>
+                 <td class="product-name"><%= link_to product_order.product.name %></td>
+                 <td class="product-price-cart"><span class="amount">$<%= product_order.product.price %></span></td>
+                 <td class="product-quantity">
+                   <div class="cart-plus-minus">
+                     <div class="dec qtybutton">-</div>
+                     <div id="product<%= product_order.id %>" class="quantity-form">
+                       <%= form_for product_order do |f| %>
+                       <%= f.text_field :quantity, class: "cart-plus-minus-box", value: product_order.quantity %>
+                       <% end %>
+                     </div>
+                     <div class="inc qtybutton">+</div>
+                   </div>
+                 </td>
+                 <td class="product-subtotal">$<%= product_order.product.price*product_order.quantity %>
+                 </td>
+                 <td class="product-remove">
+                   <%= link_to "carts/#{product_order.id}", method: :delete do %>
+                   <i class="fa fa-times"></i>
+                   <% end %>
+                 </td>
+               </tr>
+             <% end %>
+           </tbody>
+         </table>
+       </div>
+       <div class="row">
+         <div class="col-md-4 offset-md-8">
+           <div class="grand-totall">
+             <div class="title-wrap">
+               <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
+             </div>
+             <div class="total-shipping">
+             <h4 class="grand-totall-title">Grand Total  <span class="grand-total">$<%= current_order.subtotal %></span></h4>
+             </div>
+             <%= link_to "Proceed to Checkout", new_login_checkout_path %>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
