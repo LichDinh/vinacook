@@ -2255,6 +2255,8 @@ Background variation set
 }
 .product-img img {
   width: 100%;
+  width: 318px;
+  height: 251px;
 }
 
 /* banner area */
@@ -2978,6 +2980,9 @@ h4.shop-sidebar-title {
 /* shop right sodebar */
 .banner-area.pb-30 img {
   width: 100%;
+}
+.banner {
+  max-width: 1740px;
 }
 .shop-topbar-wrapper {
   border: 1px solid #e9e9e9;
