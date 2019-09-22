@@ -10,15 +10,15 @@
         <div class="col-lg-8 col-md-8 col-12 col-sm-8">
           <div class="account-curr-lang-wrap f-right">
             <ul>
-              <li class="top-hover"><a href="#">Setting  <i class="ion-chevron-down"></i></a>
+              <li class="top-hover"><a href="#">Cài đặt  <i class="ion-chevron-down"></i></a>
                 <ul>
                   <li><%= link_to "Admin", admin_root_path %></li>
                   <% unless logged_in? %>
-                    <li><%= link_to "Login", login_path %></li>
-                    <li><%= link_to "Register", login_path %></li>
+                    <li><%= link_to "Đăng nhập", login_path %></li>
+                    <li><%= link_to "Đăng ký", login_path %></li>
                   <% end %>
                   <% if logged_in? %>
-                    <li><%= link_to "my account", @current_user %></li>
+                    <li><%= link_to "Tài khoản của tôi", @current_user %></li>
                   <% end %>
                 </ul>
               </li>
@@ -71,7 +71,7 @@
                     <i class="icon-user icons"></i>
                   </div>
                   <div class="login-text-content">
-                    <p>Register <br> or <span>Sign in</span></p>
+                    <p> Đăng ký <br> or <span> Đăng nhập </span></p>
                   </div>
                 <% end %>
               <% end %>
@@ -85,7 +85,7 @@
                   <span class="count-style"><%= current_order.total_quantity %></span>
                 </div>
                 <div class="cart-text">
-                  <span class="digit">My Cart</span>
+                  <span class="digit">Giỏ hàng</span>
                   <span class="cart-digit-bold">$<%= current_order.subtotal %></span>
                 </div>
               <% end %>
@@ -134,9 +134,9 @@
             <nav>
               <ul>
                 <li class="top-hover">
-                  <%= link_to "home", root_url %>
+                  <%= link_to "Trang chủ", root_url %>
                 </li>
-                <li class="top-hover"><a href="">Category <i class="ion-chevron-down"></i></a>
+                <li class="top-hover"><a href="">Danh mục <i class="ion-chevron-down"></i></a>
                   <ul class="submenu">
                     <% Category.all.each do |category| %>
                       <li>
@@ -147,7 +147,7 @@
                     <% end %>
                   </ul>
                 </li>
-                <li class="top-hover"><a href="">Price <i class="ion-chevron-down"></i></a>
+                <li class="top-hover"><a href="">Giá <i class="ion-chevron-down"></i></a>
                   <ul class="submenu">
                     <li>
                       <%= link_to searchs_path(:code => 1) do %>
@@ -187,7 +187,7 @@
             <nav id="mobile-menu-active">
               <ul class="menu-overflow" id="nav">
                 <li>
-                  <a href="index.html">Home</a>
+                  <a href="index.html">Trang chủ</a>
                 </li>
                 <li><a href="#">pages</a>
                   <ul>
