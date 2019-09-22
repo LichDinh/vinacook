@@ -2255,6 +2255,8 @@ Background variation set
 }
 .product-img img {
   width: 100%;
+  width: 318px;
+  height: 251px;
 }
 
 /* banner area */
